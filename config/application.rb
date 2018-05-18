@@ -15,3 +15,4 @@ module RailsRecipes
     # -- all .rb files in that directory are automatically loaded.
   end
 end
+Time::DATE_FORMATS.merge!(:default => '%Y/%m/%d %I:%M %p', :ymd => '%Y/%m/%d')
