@@ -7,7 +7,7 @@ class Event < ApplicationRecord
   validates_uniqueness_of :friendly_id
   validates_inclusion_of :status, :in => STATUS
 
-
+  belongs_to :category, :optional => true 
 
   def to_param
     self.friendly_id
