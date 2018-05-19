@@ -2,6 +2,14 @@
 
 <h2>Step 1</h2>
 
+<% if @registration.errors[:base].any? %>
+  <ul>
+    <% @registration.errors[:base].each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= form_for @registration, :url => update_step1_event_registration_path(@event, @registration) do |f| %>
   <%= render :partial => "step1", :locals => {:f => f} %>
 <% end %>
