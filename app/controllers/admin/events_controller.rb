@@ -45,6 +45,17 @@ class Admin::EventsController < AdminController
     redirect_to admin_events_path
   end
 
+  def bulk_update
+    total = 0
+    Array(params[:ids]).each do |event_id|
+      event = Event.find(event_id)
+      event.destroy
+      total += 1
+    end
+    flash[:alert] = "成功删除 #{total} 笔资料"
+    redirect_to admin_events_path
+  end
+
   protected
 
   def event_params
