@@ -1,4 +1,6 @@
 "zh-CN":
+  bulk_delete: 批次删除
+  bulk_update: 批次编辑
   event:
     status:
       draft: 草稿
