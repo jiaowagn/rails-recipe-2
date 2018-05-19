@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   before_action :find_event
-  before_action :find_registration, only: [:show, :step2, :step2_update, :step3, :step3_update]
+  before_action :find_registration, only: [:show, :step1, :step1_update, :step2, :step2_update, :step3, :step3_update]
   def new
   end
 
@@ -17,6 +17,17 @@ class RegistrationsController < ApplicationController
   end
 
   def show
+  end
+
+  def step1
+  end
+
+  def step1_update
+    if @registration.update(registration_params)
+      redirect_to step2_event_registration_path(@event, @registration)
+    else
+      render "step1"
+    end
   end
 
   def step2
@@ -36,6 +47,7 @@ class RegistrationsController < ApplicationController
   def step3_update
     @registration.status = "confirmed"
     if @registration.update(registration_params)
+      flash[:notice] = "报名成功"
       redirect_to event_registration_path(@event, @registration)
     else
       render "step3"
