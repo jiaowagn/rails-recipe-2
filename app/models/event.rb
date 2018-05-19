@@ -1,4 +1,7 @@
 class Event < ApplicationRecord
+  include RankedModel
+  ranks :row_order
+  
   before_validation :generate_friendly_id, :on => :create
 
   STATUS = ["draft", "public", "private"]
@@ -8,7 +11,7 @@ class Event < ApplicationRecord
   validates_inclusion_of :status, :in => STATUS
 
   belongs_to :category, :optional => true
-  has_many :tickets, :dependent => :destroy, :inverse_of => :event 
+  has_many :tickets, :dependent => :destroy, :inverse_of => :event
   accepts_nested_attributes_for :tickets, :allow_destroy => true, :reject_if => :all_blank
 
   def to_param
