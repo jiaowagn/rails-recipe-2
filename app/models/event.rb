@@ -2,6 +2,8 @@ class Event < ApplicationRecord
   include RankedModel
   ranks :row_order
   mount_uploader :logo, EventLogoUploader
+  mount_uploaders :images, EventImageUploader
+  serialize :images, JSON
 
   before_validation :generate_friendly_id, :on => :create
 
