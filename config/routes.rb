@@ -25,6 +25,7 @@ Rails.application.routes.draw do
         post :reorder
       end
       resources :tickets, :controller => "event_tickets"
+      resources :registrations, :controller => "event_registrations"
     end
     resources :users do
       resource :profile, :controller => "user_profiles"
