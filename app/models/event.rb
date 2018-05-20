@@ -1,6 +1,7 @@
 class Event < ApplicationRecord
   include RankedModel
   ranks :row_order
+  mount_uploader :logo, EventLogoUploader
 
   before_validation :generate_friendly_id, :on => :create
 
