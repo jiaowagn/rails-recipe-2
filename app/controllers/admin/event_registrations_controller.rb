@@ -2,6 +2,7 @@ require 'csv'
 
 class Admin::EventRegistrationsController < AdminController
   before_action :find_event
+  before_action :require_editor!
   def index
     @q = @event.registrations.ransack(params[:q])
     @registrations = @q.result.includes(:ticket).order("id DESC").page(params[:page])
@@ -45,7 +46,7 @@ class Admin::EventRegistrationsController < AdminController
         end
         send_data csv_string, :filename => "#{@event.friendly_id}-registrations-#{Time.now.to_s(:number)}.csv"
       }
-      format.xlsx 
+      format.xlsx
     end
   end
 

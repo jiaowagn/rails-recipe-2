@@ -17,6 +17,11 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :role %>
+    <%= f.select :role, User::ROLE.map{|r| [t(r, :scope => "user.role"), r]}, {:include_blank => true}, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :group_ids %>
     <%= f.select :group_ids, Group.all.map{|g| [g.name, g.id]}, {}, :multiple => true, :class => "form-control"  %>
   </div>
