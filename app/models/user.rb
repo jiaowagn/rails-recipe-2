@@ -15,4 +15,12 @@ class User < ApplicationRecord
     self.email.split("@").first
   end
 
+  def is_admin?
+    self.role == "admin"
+  end
+
+  def is_editor?
+    ["admin", "editor"].include?(self.role)
+  end
+
 end
