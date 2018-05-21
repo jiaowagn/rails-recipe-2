@@ -17,6 +17,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root "events#index"
+    resources :versions do
+      post :undo 
+    end
     resources :events do
       collection do
         post :bulk_update
