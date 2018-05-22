@@ -1,7 +1,7 @@
 class Registration < ApplicationRecord
   has_paper_trail
-  
-  STATUS = ["pending", "confirmed"]
+
+  STATUS = ["pending", "confirmed", "cancelled"]
   validates_presence_of :status, :ticket_id
   validates_inclusion_of :status, :in => STATUS
   attr_accessor :current_step

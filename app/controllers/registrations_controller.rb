@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   before_action :find_event
-  before_action :find_registration, only: [:show, :step1, :step1_update, :step2, :step2_update, :step3, :step3_update]
+  before_action :set_pending_registration, only: [:step1, :step1_update, :step2, :step2_update, :step3, :step3_update]
   def new
   end
 
@@ -11,6 +11,7 @@ class RegistrationsController < ApplicationController
     @registration.user = current_user
     @registration.current_step = 1
     if @registration.save
+      CheckRegistrationJob.set(wait: 15.minutes).perform_later(@registration.id)
       redirect_to step2_event_registration_path(@event, @registration)
     else
       flash.now[:alert] = @registration.errors[:base].join("、")
@@ -19,6 +20,7 @@ class RegistrationsController < ApplicationController
   end
 
   def show
+    @registration = @event.registrations.find_by_uuid(params[:id])
   end
 
   def step1
@@ -65,8 +67,12 @@ class RegistrationsController < ApplicationController
     @event = Event.find_by_friendly_id!(params[:event_id])
   end
 
-  def find_registration
+  def set_pending_registration
     @registration = @event.registrations.find_by_uuid(params[:id])
+    if @registration.status == "cancelled"
+      flash[:alert] = "请重新报名"
+      redirect_to event_path(@event)
+    end
   end
 
   def registration_params
